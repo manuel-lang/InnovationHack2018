@@ -4,6 +4,54 @@ block content
   h1 #GetSocial
   hr
   .row
+    .col-xs-18.col-sm-6.col-md-3
+      .thumbnail
+        a#addEntry(href='#')
+          img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Icons8_flat_plus.svg/1024px-Icons8_flat_plus.svg.png', alt='')
+          #imagemodal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+            .modal-dialog
+              .modal-content
+                .modal-header
+                  button.close(type='button', data-dismiss='modal')
+                    span(aria-hidden='true') ×
+                    span.sr-only Close
+                  h4#myModalLabel.modal-title #GetSocial
+                .modal-body
+                  form.form-horizontal(action='/entry/create', method='POST')
+                    .form-group
+                      label.col-sm-3.control-label Comment:
+                      .col-sm-7
+                        textarea#comment.form-control(rows='5')
+                    .form-group
+                      label.col-sm-3.control-label Interests:
+                      .col-sm-9
+                        label.checkbox.col-sm-3
+                          input(type='checkbox', name='interest', value='')
+                          span Sports
+                        label.checkbox.col-sm-3
+                          input(type='checkbox', name='interest', value='')
+                          span Coding
+                        label.checkbox.col-sm-3
+                          input(type='checkbox', name='interest', value='')
+                          span Politics
+                        label.checkbox.col-sm-3
+                          input(type='checkbox', name='interest', value='')
+                          span Food
+                    .form-group
+                      label.col-sm-3.control-label Date:
+                      .col-sm-7
+                        input.form-control(type='datetime-local', name='schedulepicker', id='dt'+index)
+                    .form-group
+                      label.col-sm-3.control-label(for='name') Location:
+                      .col-sm-7
+                        input.form-control(type='text', name='location', id='location', value=user.profile.location)
+                    .form-group
+                      .col-sm-offset-3.col-sm-4
+                        button.btn.btn.btn-primary(type='submit')
+                          i.fas.fa-pencil-alt.fa-sm
+                          | Create
+        .caption
+          h4 create new entry
     each val in data
       .col-xs-18.col-sm-6.col-md-3
         .thumbnail
@@ -22,3 +70,10 @@ block content
             p
               a.btn.btn-info.btn-xs(href='#', role='button') Button
               a.btn.btn-default.btn-xs(href='#', role='button') Button
+  
+  script(src='/js/lib/jquery-3.1.1.min.js')
+  script(type='text/javascript').
+    $("#addEntry").on("click", function() {
+      $('#imagepreview').attr('src', $('#imageresource').attr('src')); // here asign the image to the modal when the user click the enlarge link
+      $('#imagemodal').modal('show'); // imagemodal is the id attribute assigned to the bootstrap modal, then i use the show function
+    });
