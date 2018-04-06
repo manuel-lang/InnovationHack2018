@@ -19,6 +19,7 @@ const expressValidator = require('express-validator');
 const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
+const fs = require('fs');
 
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
@@ -32,6 +33,7 @@ dotenv.load({ path: '.env' });
  */
 const homeController = require('./controllers/home');
 const userController = require('./controllers/user');
+const entryController = require('./controllers/entry');
 const apiController = require('./controllers/api');
 const contactController = require('./controllers/contact');
 
@@ -90,7 +92,7 @@ app.use((req, res, next) => {
   if (req.path === '/api/upload') {
     next();
   } else {
-    lusca.csrf()(req, res, next);
+    next();
   }
 });
 app.use(lusca.xframe('SAMEORIGIN'));
@@ -135,6 +137,26 @@ app.post('/account/profile', passportConfig.isAuthenticated, userController.post
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConfig.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConfig.isAuthenticated, userController.getOauthUnlink);
+app.post('/createentry/', function(req, res) {
+  console.log(req.body);
+  var comment = req.body.comment;
+  var time = req.body.schedulepicker;
+  var location = req.body.location;
+  var data = JSON.parse(fs.readFileSync('./jsons/entrydata.json', 'utf8'));
+  data['data'].push({"title" : "Canteen", "topic": "Machine Learning", "distance": "< 0.5 km", "time": "19:45", "participants": "1", "imgsrc": "https://www.pets4homes.co.uk/images/articles/771/cat-lifespan-the-life-expectancy-of-cats-568e40723c336.jpg"});
+  fs.writeFileSync('./jsons/entrydata.json', JSON.stringify(data));
+  res.redirect('/');
+});
+
+app.post('/participate/:id', function(req, res) {
+  var data = JSON.parse(fs.readFileSync('./jsons/entrydata.json', 'utf8'));
+  console.log(data['data']);
+  console.log(parseInt(data['data'][req.params.id]['participants']) + 1);
+  data['data'][req.params.id]['participants'] = 1 + parseInt(data['data'][req.params.id]['participants']);
+  fs.writeFileSync('./jsons/entrydata.json', JSON.stringify(data));
+  res.redirect('/');
+});
+
 
 /**
  * API examples routes.

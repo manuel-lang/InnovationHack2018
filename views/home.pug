@@ -17,25 +17,25 @@ block content
                     span.sr-only Close
                   h4#myModalLabel.modal-title #GetSocial
                 .modal-body
-                  form.form-horizontal(action='/entry/create', method='POST')
+                  form.form-horizontal(action='/createentry', method='POST')
                     .form-group
-                      label.col-sm-3.control-label Comment:
+                      label.col-sm-3.control-label(for='name') Comment:
                       .col-sm-7
-                        textarea#comment.form-control(rows='5')
+                        input.form-control(type='textarea', name='comment', id='comment')
                     .form-group
                       label.col-sm-3.control-label Interests:
                       .col-sm-9
                         label.checkbox.col-sm-3
-                          input(type='checkbox', name='interest', value='')
+                          input(type='checkbox', name='sports', value='')
                           span Sports
                         label.checkbox.col-sm-3
-                          input(type='checkbox', name='interest', value='')
+                          input(type='checkbox', name='coding', value='')
                           span Coding
                         label.checkbox.col-sm-3
-                          input(type='checkbox', name='interest', value='')
+                          input(type='checkbox', name='politics', value='')
                           span Politics
                         label.checkbox.col-sm-3
-                          input(type='checkbox', name='interest', value='')
+                          input(type='checkbox', name='food', value='')
                           span Food
                     .form-group
                       label.col-sm-3.control-label Date:
@@ -52,7 +52,7 @@ block content
                           | Create
         .caption
           h4 create new entry
-    each val in data
+    each val, index in data
       .col-xs-18.col-sm-6.col-md-3
         .thumbnail
           img(src=val.imgsrc, alt='')
@@ -62,14 +62,22 @@ block content
               i.fas.fa-info
               | #{val.topic}
             p
+              i.fas.fa-user
+              | #{val.participants}
+            p
               i.fas.fa-map-marker-alt
               | #{val.distance}
             p
               i.fas.fa-clock
               | #{val.time}
             p
-              a.btn.btn-info.btn-xs(href='#', role='button') Button
-              a.btn.btn-default.btn-xs(href='#', role='button') Button
+              - var action = '/participate/'+index;
+              <form action=#{action} method="post">
+                button.btn.btn.btn-primary(type='submit')
+                  i.fas.fa-user
+                  | Participate
+              </form> 
+
   
   script(src='/js/lib/jquery-3.1.1.min.js')
   script(type='text/javascript').

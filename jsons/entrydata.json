@@ -1,0 +1,7 @@
+{
+  "data": [
+    {"title" : "Canteen", "topic": "Machine Learning", "distance": "< 0.5 km", "time": "19:45", "participants": "1", "imgsrc": "https://www.auto.edu/wp-content/uploads/2014/12/ati-student-housing.jpg"},
+    {"title" : "Short Break", "topic": "Ethical Hacking", "distance": "< 1 km", "time": "now", "participants": "1", "imgsrc": "https://fossbytes.com/wp-content/uploads/2016/09/STUDENT-HACKER-CHANGED-GRADES.jpg"},
+    {"title" : "Meet similar minded people", "topic": "Reading - Goethe's Faust", "distance": "< 5 km", "time": "20:30", "participants": "3", "imgsrc": "https://www.br.de/fernsehen/ard-alpha/sendungen/campusmagazin/student-des-jahres-luedemann-120~_v-img__16__9__m_-4423061158a17f4152aef84861ed0243214ae6e7.jpg?version=57e2c"}
+  ]
+}
