@@ -2,17 +2,23 @@ extends layout
 
 block content
   h1 #GetSocial
-  p.lead Have a break | meet new friends | take about your interests
   hr
   .row
     each val in data
       .col-xs-18.col-sm-6.col-md-3
         .thumbnail
-          img(src='http://www.catster.com/wp-content/uploads/2017/08/Pixiebob-cat.jpg', alt='')
+          img(src=val.imgsrc, alt='')
           .caption
-            h4 val.title
+            h4 #{val.title}
             p
-              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere, soluta, eligendi doloribus sunt minus amet sit debitis repellat. Consectetur, culpa itaque odio similique suscipit
+              i.fas.fa-info
+              | #{val.topic}
+            p
+              i.fas.fa-map-marker-alt
+              | #{val.distance}
+            p
+              i.fas.fa-clock
+              | #{val.time}
             p
               a.btn.btn-info.btn-xs(href='#', role='button') Button
               a.btn.btn-default.btn-xs(href='#', role='button') Button
