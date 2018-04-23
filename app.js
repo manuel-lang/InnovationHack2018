@@ -20,7 +20,7 @@ const expressStatusMonitor = require('express-status-monitor');
 const sass = require('node-sass-middleware');
 const multer = require('multer');
 const fs = require('fs');
-
+const f = require('util').format;
 const upload = multer({ dest: path.join(__dirname, 'uploads') });
 
 /**
@@ -51,7 +51,12 @@ const app = express();
  * Connect to MongoDB.
  */
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI);
+var user = process.env.MONGODB_USER;
+var pass = process.env.MONGODB_PASS;
+var server = process.env.MONGODB_URI;
+var port = process.env.MONGODB_PORT;
+var url = f("mongodb://%s:%s/?ssl=true", server, port);
+mongoose.connect(url, {user: "getsocial", pass: "mZATx2lsk2mtgMrJzP6AzEBqIIVd3IeUH33zSNnrd4WKOqJao8osjrl00D77dSPG0EBv9UOu1kHTlqbmrVU60g=="});
 mongoose.connection.on('error', (err) => {
   console.error(err);
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
@@ -81,7 +86,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   cookie: { maxAge: 1209600000 }, // two weeks in milliseconds
   store: new MongoStore({
-    url: process.env.MONGODB_URI,
+    url: "mongodb://"+process.env.MONGODB_URI+":"+process.env.MONGODB_PORT+"/test",
     autoReconnect: true,
   })
 }));
